@@ -6,7 +6,7 @@ import urllib.parse
 from mkdocs.plugins import BasePlugin
 import mkdocs.utils
 
-log = logging.getLogger(f"mkdocs.plugins.{__name__}")
+log = logging.getLogger(f'mkdocs.plugins.{__name__}')
 log.addFilter(mkdocs.utils.warning_filter)
 
 # For Regex, match groups are:
@@ -27,7 +27,7 @@ AUTOLINK_RE = r'\[([^\]]+)\]\((([^)/]+\.(md|png|jpg))(#.*)*)\)'
 ROAMLINK_RE = r'\[\[(([^\]#\|]*)(#[^\|\]]+)*(\|[^\]]*)*)\]\]'
 
 
-class AutoLinkReplacer:
+class AutoLinkReplacer(object):
     def __init__(self, base_docs_url, page_url):
         self.base_docs_url = base_docs_url
         self.page_url = page_url
@@ -66,7 +66,7 @@ class AutoLinkReplacer:
         return link
 
 
-class RoamLinkReplacer:
+class RoamLinkReplacer(object):
     def __init__(self, base_docs_url, page_url):
         self.base_docs_url = base_docs_url
         self.page_url = page_url
@@ -78,7 +78,7 @@ class RoamLinkReplacer:
         return re.sub(r"[\-_ ]", "", filename.lower()).replace(".md", "")
 
     def gfm_anchor(self, title):
-        """Convert to gfw title / anchor 
+        """Convert to gfw title / anchor
         see: https://gist.github.com/asabaylus/3071099#gistcomment-1593627"""
         if title:
             title = title.strip().lower()
@@ -134,7 +134,6 @@ class RoamLinkReplacer:
                                 rel_link_url = rel_link_url + '#' + format_title
             if rel_link_url == '':
                 log.warning(f"RoamLinksPlugin unable to find {filename} in directory {self.base_docs_url}")
-                return whole_link
         else:
             rel_link_url = '#' + format_title
 
@@ -156,7 +155,7 @@ class RoamLinkReplacer:
         return link
 
 
-class RoamLinksPlugin(BasePlugin):
+class ObsidianBridgePlugin(BasePlugin):
     def on_page_markdown(self,
                          markdown,
                          page,

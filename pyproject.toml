@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "mkdocs-obsidian-bridge-plugin"
+version = "0.1.0"
+description = ""
+authors = ["GooRoo <sergey.olendarenko@gmail.com>"]
+license = "BSD-3-Clause"
+readme = "README.md"
+packages = [{include = "mkdocs_obsidian_bridge_plugin"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+mkdocs = "^1.4.2"
+
+
+[tool.poetry.plugins."mkdocs.plugins"]
+obsidian-bridge = "mkdocs_obsidian_bridge_plugin.plugin:ObsidianBridgePlugin"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

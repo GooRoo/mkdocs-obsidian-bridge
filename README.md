@@ -1,8 +1,11 @@
-# MkDocs Roamlinks Plugin
+# Obsidian ➡️ MkDocs Bridge
 
-An MkDocs plugin that simplifies relative linking between documents and convert [[roamlinks]] for [vscode-foam](https://github.com/foambubble/foam) & [obsidian](https://obsidian.md) 
+An MkDocs plugin that helps exporting your [Obsidian](https://obsidian.md) vault as an MkDocs site.
 
-## Setup 
+WIP
+
+<!--
+## Setup
 
 Install the plugin using pip:
 
@@ -12,7 +15,7 @@ Activate the plugin in `mkdocs.yml`:
 ```yaml
 plugins:
   - search
-  - roamlinks 
+  - roamlinks
 ```
 
 ## Usage
@@ -45,4 +48,5 @@ to [mkdoc material style](https://squidfunk.github.io/mkdocs-material/reference/
 
     something
 ```
-- [ ] `%% comment %%` to `<!-- comment -->`
+- [ ] `%% comment %%` to HTML comment
+-->
