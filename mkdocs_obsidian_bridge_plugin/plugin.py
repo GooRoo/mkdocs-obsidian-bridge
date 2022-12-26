@@ -1,18 +1,17 @@
+import logging
+import os
+import re
+import urllib.parse
 from collections import defaultdict
 from functools import partial
-import logging
-import re
-import os
-import urllib.parse
 from pathlib import Path
 
 import mkdocs.utils
-from mkdocs.config import base
-from mkdocs.plugins import BasePlugin
-
+from markdown.extensions.toc import slugify
+from mkdocs.config import base, config_options
 from mkdocs.config.defaults import MkDocsConfig
+from mkdocs.plugins import BasePlugin
 from mkdocs.structure.files import Files as MkDocsFiles
-
 
 logger = logging.getLogger(f'mkdocs.plugins.{__name__}')
 logger.addFilter(mkdocs.utils.warning_filter)
@@ -133,6 +132,23 @@ class ObsidianBridgePlugin(BasePlugin):
     def __init__(self):
         self.file_map: FilenameToPaths | None = None
 
+    def on_config(self, config: MkDocsConfig) -> MkDocsConfig:
+        # mkdocs defaults
+        toc = {
+            'slugify': slugify,
+            'separator': '-'
+        }
+
+        # update from the config if changed by a user
+        toc |= config.mdx_configs.get('toc', dict())
+
+        self.toc_slugify = partial(toc['slugify'],
+            separator=toc['separator'],
+            unicode=True
+        )
+
+        return config
+
     def on_files(self, files: MkDocsFiles, *, config: MkDocsConfig) -> MkDocsFiles:
         '''Initialize the filename lookup dict if it hasn't already been initialized'''
         if self.file_map is None:
@@ -147,11 +163,18 @@ class ObsidianBridgePlugin(BasePlugin):
         page_path = Path(page.file.abs_src_path)
 
         # Look for matches and replace
-
         markdown = self.process_markdown_links(page_path, markdown)
         markdown = self.process_obsidian_links(page_path, markdown)
 
         return markdown
+
+    def slugify(self, text: str | None) -> str:
+        assert self.toc_slugify is not None
+
+        if text is None or text == '':
+            return ''
+        else:
+            return f'#{self.toc_slugify(text)}'
 
     def build_file_map(self, files: MkDocsFiles) -> FilenameToPaths:
         result = defaultdict(list)
@@ -250,13 +273,12 @@ class ObsidianBridgePlugin(BasePlugin):
         link_filepath = Path(match['filepath'].strip())  # Relative path from the link
 
         if (new_path := self.find_best_path(link_filepath, page_path)) is not None:
-            # TODO: slugify #fragment?
             new_link = f'''[{
                 match['label']
             }]({
                 urllib.parse.quote(str(new_path))
             }{
-                match['fragment']
+                self.slugify(match['fragment'])
             }{
                 match['title']
             })'''
@@ -322,12 +344,11 @@ class ObsidianBridgePlugin(BasePlugin):
         whole_match: str = match[0]
         matched_filepath: str = match['filepath'].strip()
 
-        # TODO: slugify fragment
         if matched_filepath == '':
             return f'''[{
                 match['label'] or match['fragment_text'] or ''
             }]({
-                match['fragment'] or ''
+                self.slugify(match['fragment'])
             })'''
         else:
             link_filepath = Path(matched_filepath)
@@ -338,13 +359,13 @@ class ObsidianBridgePlugin(BasePlugin):
                 new_suffix = link_filepath.suffix + '.md'
                 new_path = self.find_best_path(link_filepath.with_suffix(new_suffix), page_path)
 
-            alternative_label: str = matched_filepath + (match['fragment'] or '')
+            alternative_label: str = matched_filepath + self.slugify(match['fragment'])
             new_link = f'''[{
                 match['label'] or alternative_label
             }]({
                 urllib.parse.quote(str(new_path or link_filepath))
             }{
-                match['fragment'] or ''
+                self.slugify(match['fragment'])
             })'''
             logger.debug(f'{whole_match} ==> {new_link}')
             return new_link
