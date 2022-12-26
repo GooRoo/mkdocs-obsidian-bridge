@@ -7,7 +7,7 @@ from functools import partial
 from pathlib import Path
 
 import mkdocs.utils
-from markdown.extensions.toc import slugify
+from markdown.extensions.toc import slugify_unicode as md_slugify
 from mkdocs.config import base, config_options
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.plugins import BasePlugin
@@ -48,7 +48,7 @@ class ObsidianBridgePlugin(BasePlugin):
     def on_config(self, config: MkDocsConfig) -> MkDocsConfig:
         # mkdocs defaults
         toc = {
-            'slugify': slugify,
+            'slugify': md_slugify,
             'separator': '-'
         }
 
@@ -56,8 +56,7 @@ class ObsidianBridgePlugin(BasePlugin):
         toc |= config.mdx_configs.get('toc', dict())
 
         self.toc_slugify = partial(toc['slugify'],
-            separator=toc['separator'],
-            unicode=True
+            separator=toc['separator']
         )
 
         return config
