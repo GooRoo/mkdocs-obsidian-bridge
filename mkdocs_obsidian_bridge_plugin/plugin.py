@@ -8,7 +8,7 @@ from pathlib import Path
 
 import mkdocs.utils
 from markdown.extensions.toc import slugify_unicode as md_slugify
-from mkdocs.config import base, config_options
+from mkdocs.config import base, config_options as co
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.plugins import BasePlugin
 from mkdocs.structure.files import Files as MkDocsFiles
@@ -25,10 +25,10 @@ class NoCandidatesError(Exception):
 
 
 class ObsidianBridgeConfig(base.Config):
-    pass
+    invalid_link_attributes = co.ListOfItems(co.Type(str), default=[])
 
 
-class ObsidianBridgePlugin(BasePlugin):
+class ObsidianBridgePlugin(BasePlugin[ObsidianBridgeConfig]):
     '''
     Plugin to make obsidian or incomplete markdown links work.
     '''
@@ -44,6 +44,7 @@ class ObsidianBridgePlugin(BasePlugin):
 
     def __init__(self):
         self.file_map: FilenameToPaths | None = None
+        self.attr_list: str | None = None
 
     def on_config(self, config: MkDocsConfig) -> MkDocsConfig:
         # mkdocs defaults
@@ -58,6 +59,16 @@ class ObsidianBridgePlugin(BasePlugin):
         self.toc_slugify = partial(toc['slugify'],
             separator=toc['separator']
         )
+
+        if len(self.config.invalid_link_attributes) > 0:
+            if 'attr_list' in config.markdown_extensions:
+                self.attr_list = ' '.join(self.config.invalid_link_attributes)
+            else:
+                logger.warning(
+                    '''[ObsidianBridgePlugin] The 'invalid_link_attributes' from the 'mkdocs.yml' will '''
+                    '''be ignored. You need to also enable the 'attr_list' Markdown extension.'''
+                )
+                self.attr_list = None
 
         return config
 
@@ -87,6 +98,12 @@ class ObsidianBridgePlugin(BasePlugin):
             return ''
         else:
             return f'#{self.toc_slugify(text)}'
+
+    def with_attrs(self, link: str, *, when=True) -> str:
+        if self.attr_list is not None and when is True:
+            return f'{link}{{: {self.attr_list}}}'
+        else:
+            return link
 
     def build_file_map(self, files: MkDocsFiles) -> FilenameToPaths:
         result = defaultdict(list)
@@ -197,7 +214,7 @@ class ObsidianBridgePlugin(BasePlugin):
             logger.debug(f'{whole_match} ==> {new_link}')
             return new_link
         else:
-            return whole_match
+            return self.with_attrs(whole_match)
 
     def process_obsidian_links(self, page_path: Path, markdown: str) -> str:
         '''
@@ -280,7 +297,7 @@ class ObsidianBridgePlugin(BasePlugin):
                 self.slugify(match['fragment'])
             })'''
             logger.debug(f'{whole_match} ==> {new_link}')
-            return new_link
+            return self.with_attrs(new_link, when=new_path is None)
 
     def process_obsidian_callouts(self, markdown: str) -> str:
         # TODO: implement
