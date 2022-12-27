@@ -1,5 +1,8 @@
 # [Obsidian][obsidian] ➡️ [MkDocs][mkdocs] Bridge
 
+[![Made by Ukrainian](https://img.shields.io/static/v1?label=Made%20by&message=Ukrainian&labelColor=1f5fb2&color=fad247&style=flat-square)](https://github.com/GooRoo/ukrainian-shields)
+[![License](https://img.shields.io/github/license/GooRoo/mkdocs-obsidian-bridge-plugin?style=flat-square)](LICENSE)
+
 An MkDocs plugin that helps exporting your [Obsidian](https://obsidian.md) vault as an MkDocs site.
 
 ## What it does
