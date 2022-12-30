@@ -101,8 +101,18 @@ I wouldn't ever write this one if I could achieve what I need with other ones. M
 
 ### Differences to [Roamlinks Plugin](https://github.com/Jackiexiao/mkdocs-roamlinks-plugin)
 
+This one, actually, was the reason why I started developing my own plugin in the first place. However, it had the following drawbacks for my use-case:
+
 1. As well as **Autolinks Plugin**, the **Roamlinks Plugin** does not try to match the best path if there several of those, does it?
-2. Also, in case it can't resolve the `[[Roam link]]`, it leaves it as a text, while [**Obsidian Bridge**](https://github.com/GooRoo/mkdocs-obsidian-bridge-plugin) still transforms it into the Markdown link although invalid one. (This one, actually, was the reason why I started developing my own plugin in the first place).
+2. Also, in case it can't resolve the `[[Roam link]]`, it leaves it as a text, while [**Obsidian Bridge**](https://github.com/GooRoo/mkdocs-obsidian-bridge-plugin) still transforms it into the Markdown link although invalid one.
+
+### Differences to [EZLinks Plugin](https://github.com/orbikm/mkdocs-ezlinks-plugin)
+
+This one looked like a perfect choice for my needs, however:
+
+1. I didn't spent much time playing with it, but **EZLinks Plugin** generated incorrect links for me. Probably because it doesn't resolve any incomplete paths as well as two previous plugins.
+2. At the same time, it **does** convert the `[[internal links]]` into actual links.
+3. It has no ability to distinguish between valid and invalid `[[internal links]]`. Maybe it could be solved by another plugin, but I haven't searched for it.
 
 ### Differences to [WikiLinks](https://python-markdown.github.io/extensions/wikilinks/) extension for [Python-Markdown](https://github.com/Python-Markdown/markdown/)
 
