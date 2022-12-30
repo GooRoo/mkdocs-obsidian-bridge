@@ -1,7 +1,7 @@
 # [Obsidian][obsidian] ➡️ [MkDocs][mkdocs] Bridge
 
 [![Made by Ukrainian](https://img.shields.io/static/v1?label=Made%20by&message=Ukrainian&labelColor=1f5fb2&color=fad247&style=flat-square)](https://github.com/GooRoo/ukrainian-shields)
-[![License](https://img.shields.io/github/license/GooRoo/mkdocs-obsidian-bridge-plugin?style=flat-square)](LICENSE)
+[![License](https://img.shields.io/github/license/GooRoo/mkdocs-obsidian-bridge?style=flat-square)](LICENSE)
 
 An MkDocs plugin that helps exporting your [Obsidian](https://obsidian.md) vault as an MkDocs site.
 
@@ -78,7 +78,7 @@ Both variants work equivalently.
 Install the plugin with:
 
 ```sh
-pip install mkdocs-obsidian-bridge-plugin
+pip install mkdocs-obsidian-bridge
 ```
 
 The plugin depends on some features of Python 3.10, so this is the minimum required version.
@@ -104,7 +104,7 @@ I wouldn't ever write this one if I could achieve what I need with other ones. M
 This one, actually, was the reason why I started developing my own plugin in the first place. However, it had the following drawbacks for my use-case:
 
 1. As well as **Autolinks Plugin**, the **Roamlinks Plugin** does not try to match the best path if there several of those, does it?
-2. Also, in case it can't resolve the `[[Roam link]]`, it leaves it as a text, while [**Obsidian Bridge**](https://github.com/GooRoo/mkdocs-obsidian-bridge-plugin) still transforms it into the Markdown link although invalid one.
+2. Also, in case it can't resolve the `[[Roam link]]`, it leaves it as a text, while [**Obsidian Bridge**](https://github.com/GooRoo/mkdocs-obsidian-bridge) still transforms it into the Markdown link although invalid one.
 
 ### Differences to [EZLinks Plugin](https://github.com/orbikm/mkdocs-ezlinks-plugin)
 
@@ -185,9 +185,9 @@ I give no guarantees about the deadlines or whether I implement anything at all.
 
 I do appreciate any kind of constructive feedback.
 
-* If you found a bug, please, [report it](https://github.com/GooRoo/mkdocs-obsidian-bridge-plugin/issues/new).
-* If you want to request a feature, please, [post an idea](https://github.com/GooRoo/mkdocs-obsidian-bridge-plugin/discussions/new?category=Ideas).
-* In all other cases, don't hesitate to [start a discussion](https://github.com/GooRoo/mkdocs-obsidian-bridge-plugin/discussions/new).
+* If you found a bug, please, [report it](https://github.com/GooRoo/mkdocs-obsidian-bridge/issues/new).
+* If you want to request a feature, please, [post an idea](https://github.com/GooRoo/mkdocs-obsidian-bridge/discussions/new?category=Ideas).
+* In all other cases, don't hesitate to [start a discussion](https://github.com/GooRoo/mkdocs-obsidian-bridge/discussions/new).
 
 
 [mkdocs]: https://www.mkdocs.org
