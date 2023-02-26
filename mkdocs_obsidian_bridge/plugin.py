@@ -256,7 +256,7 @@ class ObsidianBridgePlugin(BasePlugin[ObsidianBridgeConfig]):
         #   n + 0: regular text
         #   n + 1: text in backticks, e.g. ```some code```, or <pre>, or <code>
         #   n + 2: actual number of backtics, e.g. ```
-        CODE_BLOCK = re.compile(r'((`+).+?\2|<pre>.+?</pre>|<code>.+?</code>)')
+        CODE_BLOCK = re.compile(r'((`+).+?\2|<pre>.+?</pre>|<code>.+?</code>)', re.DOTALL)
         raw_chunks = re.split(CODE_BLOCK, markdown)
 
         processed_chunks = [
