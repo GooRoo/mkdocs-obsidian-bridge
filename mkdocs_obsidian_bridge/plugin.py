@@ -116,7 +116,6 @@ class ObsidianBridgePlugin(BasePlugin[ObsidianBridgeConfig]):
     def best_path(self, page_dir: Path, candidates: list[Path]) -> Path:
         '''Return the shortest path from the list of path candidates relatively to the page_dir.'''
         assert page_dir.is_absolute()
-        assert len(candidates) > 0
         assert all(c.is_absolute() for c in candidates)
 
         match len(candidates):
@@ -133,6 +132,9 @@ class ObsidianBridgePlugin(BasePlugin[ObsidianBridgeConfig]):
                 raise NoCandidatesError()
 
     def find_best_path(self, link_filepath: Path, page_path: Path) -> Path | None:
+        def match_link_filepath(p: Path) -> bool:
+            return p.as_posix().endswith(link_filepath.as_posix())
+
         assert page_path.is_absolute()
         assert self.file_map is not None
 
@@ -148,7 +150,9 @@ class ObsidianBridgePlugin(BasePlugin[ObsidianBridgeConfig]):
             return
 
         page_dir = page_path.parent
-        path_candidates = self.file_map[link_filepath.name]
+        # filter the list of all candidates for the filename, so that only those with a match of the filepath
+        # from the link are left
+        path_candidates = [p for p in self.file_map[link_filepath.name] if match_link_filepath(p)]
         try:
             return self.best_path(page_dir, path_candidates)
         except NoCandidatesError:
