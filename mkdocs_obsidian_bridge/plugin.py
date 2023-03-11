@@ -292,7 +292,7 @@ class ObsidianBridgePlugin(BasePlugin[ObsidianBridgeConfig]):
                 new_suffix = link_filepath.suffix + '.md'
                 new_path = self.find_best_path(link_filepath.with_suffix(new_suffix), page_path)
 
-            alternative_label: str = matched_filepath + self.slugify(match['fragment'])
+            alternative_label: str = matched_filepath + (match['fragment'] or '')
             new_link = f'''[{
                 match['label'] or alternative_label
             }]({
