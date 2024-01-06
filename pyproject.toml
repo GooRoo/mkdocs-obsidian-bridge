@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mkdocs-obsidian-bridge"
-version = "1.0.1"
+version = "1.0.2"
 description = "An MkDocs plugin that helps exporting your Obsidian vault as an MkDocs site."
 authors = ["GooRoo <sergey.olendarenko@gmail.com>"]
 license = "BSD-3-Clause"
@@ -13,7 +13,7 @@ obsidian-bridge = "mkdocs_obsidian_bridge.plugin:ObsidianBridgePlugin"
 [tool.poetry.dependencies]
 python = "^3.10"
 mkdocs = "^1.4.2"
-markdown = ">=3.2.1,<3.4"
+markdown = "^3.2.1"
 
 [tool.poetry.group.dev.dependencies]
 yapf = "^0.32.0"
