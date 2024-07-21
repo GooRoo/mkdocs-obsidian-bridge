@@ -209,7 +209,7 @@ class ObsidianBridgePlugin(BasePlugin[ObsidianBridgeConfig]):
             new_link = f'''[{
                 match['label']
             }]({
-                urllib.parse.quote(str(new_path))
+                urllib.parse.quote(new_path.as_posix())
             }{
                 self.slugify(match['fragment'])
             }{
@@ -296,7 +296,7 @@ class ObsidianBridgePlugin(BasePlugin[ObsidianBridgeConfig]):
             new_link = f'''[{
                 match['label'] or alternative_label
             }]({
-                urllib.parse.quote(str(new_path or link_filepath))
+                urllib.parse.quote((new_path or link_filepath).as_posix())
             }{
                 self.slugify(match['fragment'])
             })'''
