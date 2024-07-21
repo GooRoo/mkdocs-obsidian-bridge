@@ -284,7 +284,7 @@ class ObsidianBridgePlugin(BasePlugin[ObsidianBridgeConfig]):
                 self.slugify(match['fragment'])
             })'''
         else:
-            link_filepath = Path(matched_filepath)
+            link_filepath = Path(matched_filepath.replace('\\', '/'))
 
             new_path = self.find_best_path(link_filepath, page_path)
             # if nothing found, try once again but with ".md" file extension

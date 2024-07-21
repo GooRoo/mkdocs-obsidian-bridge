@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mkdocs-obsidian-bridge"
-version = "1.0.2"
+version = "1.0.3"
 description = "An MkDocs plugin that helps exporting your Obsidian vault as an MkDocs site."
 authors = ["GooRoo <sergey.olendarenko@gmail.com>"]
 license = "BSD-3-Clause"
