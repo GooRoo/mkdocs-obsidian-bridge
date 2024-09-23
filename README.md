@@ -1,7 +1,14 @@
+<!--
+SPDX-FileCopyrightText: © 2022 Serhii “GooRoo” Olendarenko
+
+SPDX-License-Identifier: BSD-3-Clause
+-->
+
 # [Obsidian][obsidian] ➡️ [MkDocs][mkdocs] Bridge
 
-[![Made by Ukrainian](https://img.shields.io/static/v1?label=Made%20by&message=Ukrainian&labelColor=1f5fb2&color=fad247&style=flat-square)](https://github.com/GooRoo/ukrainian-shields)
+[![Made by Ukrainian](https://img.shields.io/static/v1?label=Made%20by&message=Ukrainian&labelColor=1f5fb2&color=fad247&style=flat-square)](https://savelife.in.ua/en/donate-en/#donate-army-card-once)
 [![License](https://img.shields.io/github/license/GooRoo/mkdocs-obsidian-bridge?style=flat-square)](LICENSE)
+![REUSE Compliance](https://img.shields.io/reuse/compliance/github.com%2FGooRoo%2Fmkdocs-obsidian-bridge?style=flat-square)
 
 An MkDocs plugin that helps exporting your [Obsidian](https://obsidian.md) vault as an MkDocs site.
 
