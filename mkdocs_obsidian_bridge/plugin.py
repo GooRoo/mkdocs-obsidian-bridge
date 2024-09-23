@@ -35,7 +35,7 @@ class ObsidianBridgePlugin(BasePlugin[ObsidianBridgeConfig]):
     Plugin to make obsidian or incomplete markdown links work.
     '''
 
-    # from https://help.obsidian.md/Advanced+topics/Accepted+file+formats:
+    # from https://help.obsidian.md/Files+and+folders/Accepted+file+formats:
     OBSIDIAN_FORMATS = [
         'md',
         'png', 'jpg', 'jpeg', 'gif', 'bmp', 'svg',
