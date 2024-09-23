@@ -1,31 +1,43 @@
 # SPDX-FileCopyrightText: © 2022 Serhii “GooRoo” Olendarenko
 #
 # SPDX-License-Identifier: BSD-3-Clause
-[tool.poetry]
+
+[project]
 name = "mkdocs-obsidian-bridge"
 version = "1.0.4"
 description = "An MkDocs plugin that helps exporting your Obsidian vault as an MkDocs site."
-authors = ["GooRoo <sergey.olendarenko@gmail.com>"]
+authors = [{ name = "GooRoo", email = "sergey.olendarenko@gmail.com" }]
 license = "BSD-3-Clause"
 readme = "README.md"
-packages = [{include = "mkdocs_obsidian_bridge"}]
+requires-python = ">=3.10,<4"
+dependencies = [
+	"mkdocs >=1.4.2",
+	"markdown >=3.2.1",
+	"obsidian-media>=2.0.0",
+]
 
-[tool.poetry.plugins."mkdocs.plugins"]
+[project.entry-points."mkdocs.plugins"]
 obsidian-bridge = "mkdocs_obsidian_bridge.plugin:ObsidianBridgePlugin"
 
-[tool.poetry.dependencies]
-python = "^3.10"
-mkdocs = "^1.4.2"
-markdown = "^3.2.1"
+[tool.uv]
+dev-dependencies = [
+	"yapf >=0.32.0",
+	"pylama[pylint,toml] >=8.4.1",
+	"ipykernel >=6.19.4",
+]
 
-[tool.poetry.group.dev.dependencies]
-yapf = "^0.32.0"
-pylama = {extras = ["pylint", "toml"], version = "^8.4.1"}
-ipykernel = "^6.19.4"
+[tool.uv.sources]
+# obsidian-media = { path = "../obsidian-media", editable = true }
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.sdist]
+exclude = [
+	".gitignore",
+	".justfile",
+]
 
 [tool.pylama]
 max_line_length = 120
