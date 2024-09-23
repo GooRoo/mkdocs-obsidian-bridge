@@ -10,11 +10,28 @@ authors = [{ name = "GooRoo", email = "sergey.olendarenko@gmail.com" }]
 license = "BSD-3-Clause"
 readme = "README.md"
 requires-python = ">=3.10,<4"
+classifiers = [
+	"Development Status :: 5 - Production/Stable",
+	"Environment :: Plugins",
+	"Framework :: MkDocs",
+	"License :: OSI Approved :: BSD License",
+	"Programming Language :: Python :: 3",
+	"Programming Language :: Python :: 3.10",
+	"Topic :: Documentation",
+	"Topic :: Software Development :: Documentation",
+	"Topic :: Text Processing :: Markup :: HTML",
+	"Topic :: Text Processing :: Markup :: Markdown",
+]
 dependencies = [
 	"mkdocs >=1.4.2",
 	"markdown >=3.2.1",
 	"obsidian-media>=2.0.0",
 ]
+
+[project.urls]
+Homepage = "https://github.com/GooRoo/mkdocs-obsidian-bridge"
+Issues = "https://github.com/GooRoo/mkdocs-obsidian-bridge/issues"
+Repository = "https://github.com/GooRoo/mkdocs-obsidian-bridge.git"
 
 [project.entry-points."mkdocs.plugins"]
 obsidian-bridge = "mkdocs_obsidian_bridge.plugin:ObsidianBridgePlugin"
