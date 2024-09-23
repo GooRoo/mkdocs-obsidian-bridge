@@ -18,8 +18,6 @@ from mkdocs.plugins import BasePlugin
 from mkdocs.structure.files import Files as MkDocsFiles
 
 logger = logging.getLogger(f'mkdocs.plugins.{__name__}')
-logger.addFilter(mkdocs.utils.warning_filter)
-
 
 FilenameToPaths = defaultdict[str, list[Path]]
 

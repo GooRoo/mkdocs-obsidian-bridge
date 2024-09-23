@@ -13,7 +13,6 @@ requires-python = ">=3.10,<4"
 dependencies = [
 	"mkdocs >=1.4.2",
 	"markdown >=3.2.1",
-	"obsidian-media>=2.0.0",
 ]
 
 [project.entry-points."mkdocs.plugins"]
