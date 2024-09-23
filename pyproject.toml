@@ -36,6 +36,7 @@ build-backend = "hatchling.build"
 [tool.hatch.build.targets.sdist]
 exclude = [
 	".gitignore",
+	".github/workflows/*",
 	".justfile",
 ]
 
