@@ -88,6 +88,7 @@ class ObsidianBridgePlugin(BasePlugin[ObsidianBridgeConfig]):
         page_path = Path(page.file.abs_src_path)
 
         # Look for matches and replace
+        markdown = self.process_obsidian_callouts(markdown)
         markdown = self.process_markdown_links(page_path, markdown)
         markdown = self.process_obsidian_links(page_path, markdown)
 
@@ -306,8 +307,69 @@ class ObsidianBridgePlugin(BasePlugin[ObsidianBridgeConfig]):
             return self.with_attrs(new_link, when=new_path is None)
 
     def process_obsidian_callouts(self, markdown: str) -> str:
-        # TODO: implement
-        return markdown
+        """Convert Obsidian callouts to MkDocs admonitions"""
+
+        CALLOUT_PATTERN = re.compile(
+            r">\s*\[!(\w+)\](?:\s+([^>\n]+))?\n((?:>[ ]?.+(?:\n|$))*)"
+        )
+
+        CALLOUT_MAPPING = {
+            "note": "note",
+            "abstract": "abstract",
+            "summary": "abstract",
+            "tldr": "abstract",
+            "info": "info",
+            "todo": "info",
+            "tip": "tip",
+            "hint": "tip",
+            "important": "tip",
+            "success": "success",
+            "check": "success",
+            "done": "success",
+            "question": "question",
+            "help": "question",
+            "faq": "question",
+            "warning": "warning",
+            "caution": "warning",
+            "attention": "warning",
+            "failure": "failure",
+            "fail": "failure",
+            "missing": "failure",
+            "danger": "danger",
+            "error": "danger",
+            "bug": "bug",
+            "example": "example",
+            "quote": "quote",
+            "cite": "quote",
+        }
+
+        def convert_callout(match):
+            callout_type = match.group(1).lower() if match.group(1) else "note"
+            title = match.group(2)
+            content = match.group(3)
+
+            admonition_type = CALLOUT_MAPPING.get(callout_type, "note")
+
+            # Use capitalized callout type as title if no title provided
+            if title:
+                result = f'!!! {admonition_type} "{title.strip()}"\n'
+            else:
+                default_title = callout_type.capitalize()
+                result = f'!!! {admonition_type} "{default_title}"\n'
+
+            content_lines = []
+            for line in content.split("\n"):
+                stripped_line = line.lstrip("> ").rstrip()
+                if stripped_line:
+                    content_lines.append(f"    {stripped_line}")
+                else:
+                    content_lines.append("")
+
+            indented_content = "\n".join(content_lines).rstrip()
+            return f"{result}{indented_content}\n\n"
+
+        processed = CALLOUT_PATTERN.sub(convert_callout, markdown)
+        return processed
 
     def process_obsidian_comments(self, markdown: str) -> str:
         # TODO: implement
