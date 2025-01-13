@@ -108,6 +108,17 @@ markdown_extensions:
 
 More information on this feature can be found here: [**GooRoo/obsidian-media**](https://github.com/GooRoo/obsidian-media).
 
+### Using callouts
+
+Looking for Obsidian-style callouts? Enable them in your `mkdocs.yml` like this:
+
+```yaml
+markdown_extensions:
+  - obsidian_callouts
+```
+
+More information on this feature can be found here: [**GooRoo/obsidian-callouts**](https://github.com/GooRoo/obsidian-callouts).
+
 ## Why one more plugin?
 
 I wouldn't ever write this one if I could achieve what I need with other ones. Maybe, I just couldn't find the solution, but here we are.
@@ -198,8 +209,8 @@ plugins:
 
 My current preliminary roadmap is the following:
 
-- [x] [Embedding of audio/video](https://help.obsidian.md/Linking+notes+and+files/Embed+files)
-- [ ] Obsidian's [**callouts**](https://help.obsidian.md/Editing+and+formatting/Callouts) ➡️ MkDocs's [**admonitions**](https://python-markdown.github.io/extensions/admonition/)
+- [x] [**Embedding of audio/video**](https://help.obsidian.md/Linking+notes+and+files/Embed+files)
+- [x] Obsidian's [**callouts**](https://help.obsidian.md/Editing+and+formatting/Callouts)
 - [ ] Support for Obsidian's [**nested tags**](https://help.obsidian.md/Editing+and+formatting/Tags#Nested+tags)
 - [ ] Obsidian's [**comments**](https://help.obsidian.md/Editing+and+formatting/Basic+formatting+syntax#Comments) `%% ... %%` ➡️ HTML comments `<!-- ... -->`
 

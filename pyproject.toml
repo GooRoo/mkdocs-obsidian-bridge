@@ -4,7 +4,7 @@
 
 [project]
 name = "mkdocs-obsidian-bridge"
-version = "1.1.1"
+version = "1.2.0"
 description = "An MkDocs plugin that helps exporting your Obsidian vault as an MkDocs site."
 authors = [{ name = "GooRoo", email = "sergey.olendarenko@gmail.com" }]
 license = "BSD-3-Clause"
@@ -25,6 +25,7 @@ classifiers = [
 dependencies = [
 	"mkdocs >=1.4.2",
 	"markdown >=3.2.1",
+	"obsidian-callouts>=1.0.0",
 	"obsidian-media>=2.0.0",
 ]
 
@@ -45,6 +46,7 @@ dev-dependencies = [
 
 [tool.uv.sources]
 # obsidian-media = { path = "../obsidian-media", editable = true }
+# obsidian-callouts = { path = "../obsidian-callouts", editable = true }
 
 [build-system]
 requires = ["hatchling"]
