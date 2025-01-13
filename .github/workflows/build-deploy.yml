@@ -1,0 +1,37 @@
+# SPDX-FileCopyrightText: © 2025 Serhii “GooRoo” Olendarenko
+# SPDX-FileContributor: Serhii Olendarenko <sergey.olendarenko@gmail.com>
+#
+# SPDX-License-Identifier: BSD-3-Clause
+
+name: 'Build: Deploy to PyPI'
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: PyPI
+      url: https://pypi.org/project/mkdocs-obsidian-bridge/
+    permissions:
+      id-token: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "0.5.18"
+
+      - name: Set up Python
+        run: uv python install
+        
+      - name: Build package
+        run: uv build
+        
+      - name: Publish package distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
