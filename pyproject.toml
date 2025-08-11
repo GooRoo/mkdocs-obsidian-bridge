@@ -42,6 +42,10 @@ dev-dependencies = [
 	"yapf >=0.32.0",
 	"pylama[pylint,toml] >=8.4.1",
 	"ipykernel >=6.19.4",
+	"pytest >=7.0.0",
+	"mkdocs-test>=0.5.3",
+	"super-collections>=0.5.3",
+	"rich>=14.1.0",
 ]
 
 [tool.uv.sources]
@@ -70,3 +74,20 @@ column_limit = 120
 dedent_closing_brackets = true
 spaces_around_power_operator = true
 spaces_before_comment = 2
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+addopts = [
+	"-p", "no:pylama",
+	"--verbose",
+	"--tb=short",
+	"--strict-markers",
+	"--strict-config",
+	"--disable-warnings"
+]
+markers = [
+	"slow: marks tests as slow (deselect with '-m \"not slow\"')",
+	"integration: marks tests as integration tests",
+]

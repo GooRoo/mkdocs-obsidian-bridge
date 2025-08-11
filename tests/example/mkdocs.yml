@@ -1,0 +1,41 @@
+site_name: My Docs
+
+markdown_extensions:
+  - attr_list
+  - obsidian_callouts
+  - obsidian_media_mkdocs
+
+extra_css:
+  - stylesheets/extra.css
+
+plugins:
+  - test
+  - obsidian-bridge:
+      invalid_link_attributes:
+        - ".invalid"
+        - 'style="color: red"'
+
+nav:
+  - Welcome: index.md
+  - Links: Links.md
+  - Weird Links: Weird Links.md
+  - Images: Images.md
+  - Non-Working: Non-Working.md
+  - foo:
+      - bar:
+          - README: foo/bar/README.md
+          - One: foo/bar/One.md
+          - Two: foo/bar/Two.md
+          - Three: foo/bar/Three.md
+      - buzz:
+          - index: foo/buzz/index.md
+          - One: foo/buzz/One.md
+          - Another Page: foo/buzz/Another Page.md
+  - Notes:
+      - 2024:
+          - Books: Notes/2024/Books.md
+          - Games: Notes/2024/Games.md
+      - 2025:
+          - index: Notes/2025/index.md
+          - Books: Notes/2025/Books.md
+          - Sport: Notes/2025/Sport.md

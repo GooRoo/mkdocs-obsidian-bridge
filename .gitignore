@@ -4,6 +4,8 @@
 
 .DS_Store
 *.ipynb 
+__test__
+tests/example/site
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
