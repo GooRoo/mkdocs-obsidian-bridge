@@ -12,3 +12,8 @@ SPDX-License-Identifier= "CC0-1.0"
 path = ".justfile"
 SPDX-FileCopyrightText= "© 2024 Serhii “GooRoo” Olendarenko"
 SPDX-License-Identifier= "BSD-3-Clause"
+
+[[annotations]]
+path = "tests/example/**/*"
+SPDX-FileCopyrightText= "© 2025 Serhii “GooRoo” Olendarenko"
+SPDX-License-Identifier= "CC0-1.0"
