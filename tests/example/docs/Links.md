@@ -36,3 +36,12 @@ also does not lead to `foo/bar/Two.md`
 [[README]] leads to `foo/bar/README.md` and looks like `README`.
 
 [[Invalid Page]] leads to nowhere and looks like `Invalid Page`.
+
+# Some header
+
+[[#Some header]]
+
+[Two](foo/bar/Two.md)
+
+[One](buzz/One.md)
+

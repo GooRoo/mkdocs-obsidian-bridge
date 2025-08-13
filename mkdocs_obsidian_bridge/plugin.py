@@ -176,9 +176,10 @@ class ObsidianBridgePlugin(BasePlugin[ObsidianBridgeConfig]):
         #       filepath: Filename e.g. filename.md
         #       fragment: hash anchor e.g. #my-sub-heading-link
         #       title: (image) title in quotation marks
+        # fmt: off
         MARKDOWN_LINK = (
             # part in brackets:
-            r'(?:\!\[\]|\[(?P<label>[^\]]+)\])'
+            r'(?:\[\]|\[(?P<label>[^\]]+)\])'
             # part in parentheses:
             r'\('
                 # link:
@@ -194,6 +195,7 @@ class ObsidianBridgePlugin(BasePlugin[ObsidianBridgeConfig]):
                 r'(?P<title>(?:\s+\".*\")*)'
             r'\)'
         )
+        # fmt: on
 
         return re.sub(
             MARKDOWN_LINK,
@@ -205,11 +207,15 @@ class ObsidianBridgePlugin(BasePlugin[ObsidianBridgeConfig]):
         assert page_path.is_absolute()
 
         whole_match: str = match[0]
-        link_filepath = Path(match['filepath'].strip())  # Relative path from the link
+        
+        # Relative path from the link
+        link_filepath = Path(
+            urllib.parse.unquote(match['filepath'].strip())
+        )  
 
         if (new_path := self.find_best_path(link_filepath, page_path)) is not None:
             new_link = f'''[{
-                match['label']
+                match['label'] or ''
             }]({
                 urllib.parse.quote(new_path.as_posix())
             }{

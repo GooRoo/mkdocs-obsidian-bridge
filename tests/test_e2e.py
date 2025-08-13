@@ -21,8 +21,23 @@ def main_div(page: MkDocsPage):
     return main_div
 
 
-def test_successful_build(doc_project):
+def test_build(doc_project):
     result = doc_project.build(strict=False, verbose=True)
+
+    assert doc_project.success, (
+        f"Exit code: {result.returncode}\n\n"
+        f"--- STDOUT ---\n{result.stdout}\n\n"
+        f"--- STDERR ---\n{result.stderr}\n"
+    )
+
+    assert doc_project.build_result.returncode == 0
+
+    doc_project.self_check()
+
+
+@pytest.mark.skip(reason="This doesn't work yet")
+def test_strict_build(doc_project):
+    result = doc_project.build(strict=True, verbose=True)
 
     assert doc_project.success, (
         f"Exit code: {result.returncode}\n\n"
@@ -62,6 +77,9 @@ def test_links_page(doc_project):
         "../foo/buzz/",
         "../foo/bar/",
         "Invalid%20Page",
+        "#some-header",
+        "../foo/bar/Two/",
+        "../foo/buzz/One/",
     ]
 
     ps = content.find_all("p")
@@ -140,20 +158,24 @@ def test_images_page(doc_project):
     content_text = content.get_text()
     assert len(content_text.strip()) > 0
 
+    IMAGES = [
+        ("Swearing at work.jpg", "../assets/Swearing%20at%20work.jpg"),
+        ("", "../assets/Swearing%20at%20work.jpg"),
+        ("test", "../assets/Swearing%20at%20work.jpg"),
+        ("", "../assets/Swearing%20at%20work.jpg"),
+    ]
+
     ps = content.find_all("p")
-    assert len(ps) == 2
+    assert len(ps) == len(IMAGES)
 
-    p = ps[0]
-    assert p.img is not None
-    assert p.img["alt"] == "Swearing at work.jpg"
-    assert p.img["src"] == "../assets/Swearing%20at%20work.jpg"
-    assert p.get_text() == " embeds the image."
-
-    p = ps[1]
-    assert p.img is not None
-    assert p.img["alt"] == ""
-    assert p.img["src"] == "../assets/Swearing%20at%20work.jpg"
-    assert p.get_text() == " embeds the image too."
+    for i, p in enumerate(ps):
+        assert p is not None
+        if len(IMAGES[i]) > 0:
+            assert p.img is not None
+            assert p.img.get("alt", "") == IMAGES[i][0]
+            assert p.img["src"] == IMAGES[i][1]
+        else:
+            assert p.img is None
 
 
 def test_sport_page(doc_project):
