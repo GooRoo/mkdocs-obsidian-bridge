@@ -35,7 +35,6 @@ def test_build(doc_project):
     doc_project.self_check()
 
 
-@pytest.mark.skip(reason="This doesn't work yet")
 def test_strict_build(doc_project):
     result = doc_project.build(strict=True, verbose=True)
 

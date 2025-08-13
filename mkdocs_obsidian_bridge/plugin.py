@@ -10,7 +10,6 @@ from collections import defaultdict
 from functools import partial
 from pathlib import Path
 
-import mkdocs.utils
 from markdown.extensions.toc import slugify_unicode as md_slugify
 from mkdocs.config import base, config_options as co
 from mkdocs.config.defaults import MkDocsConfig
@@ -28,6 +27,7 @@ class NoCandidatesError(Exception):
 
 class ObsidianBridgeConfig(base.Config):
     invalid_link_attributes = co.ListOfItems(co.Type(str), default=[])
+    warn_on_invalid_links = co.Type(bool, default=False)
 
 
 class ObsidianBridgePlugin(BasePlugin[ObsidianBridgeConfig]):
@@ -44,9 +44,10 @@ class ObsidianBridgePlugin(BasePlugin[ObsidianBridgeConfig]):
         'pdf'
     ]
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.file_map: FilenameToPaths | None = None
         self.attr_list: str | None = None
+        self.warn_on_invalid_links: bool = False
 
     def on_config(self, config: MkDocsConfig) -> MkDocsConfig:
         # mkdocs defaults
@@ -71,6 +72,11 @@ class ObsidianBridgePlugin(BasePlugin[ObsidianBridgeConfig]):
                     '''be ignored. You need to also enable the 'attr_list' Markdown extension.'''
                 )
                 self.attr_list = None
+
+        if 'warn_on_invalid_links' in self.config:
+            self.warn_on_invalid_links = self.config.warn_on_invalid_links
+            if not isinstance(self.warn_on_invalid_links, bool):
+                raise ValueError('The "warn_on_invalid_links" option must be a boolean value.')
 
         return config
 
@@ -141,14 +147,15 @@ class ObsidianBridgePlugin(BasePlugin[ObsidianBridgeConfig]):
         assert self.file_map is not None
 
         # Check if the filename exists in the filename to abs path lookup defaultdict
+        # (An if-statement is necessary because self.filename_to_abs_path is a
+        # defaultdict, so the more pythonic try: except: wouldn't work).
         if link_filepath.name not in self.file_map:
-            # An if-statement is necessary because self.filename_to_abs_path is a
-            # defaultdict, so the more pythonic try: except: wouldn't work.
-            logger.warning(
-                '''[ObsidianBridgePlugin] Unable to find %s in directory %s''',
+            logger.debug(
+                '''[ObsidianBridge] Unable to find "%s" in directory "%s".''',
                 link_filepath,
                 self.docs_dir,
             )
+            logger.debug('[ObsidianBridge] Looking for candidates now...')
             return
 
         page_dir = page_path.parent
@@ -158,7 +165,7 @@ class ObsidianBridgePlugin(BasePlugin[ObsidianBridgeConfig]):
         try:
             return self.best_path(page_dir, path_candidates)
         except NoCandidatesError:
-            logger.error('''[ObsidianBridgePlugin] No candidates for filepath '%s' were given.''', link_filepath)
+            logger.error('''[ObsidianBridge] No candidates for filepath '%s' were given.''', link_filepath)
             return
 
     def process_markdown_links(self, page_path: Path, markdown: str) -> str:
@@ -223,7 +230,7 @@ class ObsidianBridgePlugin(BasePlugin[ObsidianBridgeConfig]):
             }{
                 match['title']
             })'''
-            logger.debug(f'{whole_match} ==> {new_link}')
+            logger.debug(f'[ObsidianBridge] Replace: {whole_match} ==> {new_link}')
             return new_link
         else:
             return self.with_attrs(whole_match)
@@ -308,8 +315,16 @@ class ObsidianBridgePlugin(BasePlugin[ObsidianBridgeConfig]):
             }{
                 self.slugify(match['fragment'])
             })'''
-            logger.debug(f'{whole_match} ==> {new_link}')
-            return self.with_attrs(new_link, when=new_path is None)
+            logger.debug(f'[ObsidianBridge] Replace: {whole_match} ==> {new_link}')
+
+            path_is_invalid = new_path is None
+            if path_is_invalid and self.warn_on_invalid_links:
+                logger.warning(
+                    '''[ObsidianBridge] The resulting link seems to be invalid: %s.''',
+                    new_link,
+                )
+
+            return self.with_attrs(new_link, when=path_is_invalid)
 
     def process_obsidian_callouts(self, markdown: str) -> str:
         # TODO: implement

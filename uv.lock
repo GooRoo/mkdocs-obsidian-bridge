@@ -520,7 +520,7 @@ requires-dist = [
 [package.metadata.requires-dev]
 dev = [
     { name = "ipykernel", specifier = ">=6.19.4" },
-    { name = "mkdocs-test", specifier = ">=0.5.3" },
+    { name = "mkdocs-test", specifier = ">=0.5.6" },
     { name = "pylama", extras = ["pylint", "toml"], specifier = ">=8.4.1" },
     { name = "pytest", specifier = ">=7.0.0" },
     { name = "rich", specifier = ">=14.1.0" },
@@ -530,16 +530,20 @@ dev = [
 
 [[package]]
 name = "mkdocs-test"
-version = "0.5.3"
+version = "0.5.6"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "beautifulsoup4" },
     { name = "markdown" },
+    { name = "mkdocs" },
     { name = "pandas" },
+    { name = "pyyaml" },
+    { name = "rich" },
+    { name = "super-collections" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/74/82/006694bfcddb5308b9db21195181e0d839a3b8d6372f7c09dc9151ab38ad/mkdocs_test-0.5.3.tar.gz", hash = "sha256:2fd57bfadbc8eb10975e4984d52d82383d64916b0b2dbdb4e4c7a2e67f976688", size = 18357, upload-time = "2024-10-28T19:15:33.639Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/b4/fc/82667c82079719c475ef6c6e30b3544941e4e6990fe7259869acf815ad58/mkdocs_test-0.5.6.tar.gz", hash = "sha256:4250f8c2372d51ef32376957815c73ddecd8d81de4483d592e4c8450d8ade75d", size = 24722, upload-time = "2025-08-11T16:31:26.037Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d3/a4/7d9763e5a280ff7f966c3c6c94fc22c71e35c90bfb3ca2dbc0ff301f50a6/mkdocs_test-0.5.3-py3-none-any.whl", hash = "sha256:bf951f2c26cf2f94268a28c6189e13749db32ad5d2a06e36e492aaaf86341731", size = 16009, upload-time = "2024-10-28T19:15:32.158Z" },
+    { url = "https://files.pythonhosted.org/packages/58/45/a80684fe274f6da82ba73f409eaf4b2a3857a893489d083586c66cb95b40/mkdocs_test-0.5.6-py3-none-any.whl", hash = "sha256:5c869533ee0b70b04bba49b4ee71e1633929ae0ccee913fd962f12cf32f09bde", size = 27072, upload-time = "2025-08-11T16:31:23.707Z" },
 ]
 
 [[package]]

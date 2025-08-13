@@ -9,6 +9,7 @@ SPDX-License-Identifier: BSD-3-Clause
 [![Made by Ukrainian](https://img.shields.io/static/v1?label=Made%20by&message=Ukrainian&labelColor=1f5fb2&color=fad247&style=flat-square)](https://savelife.in.ua/en/donate-en/#donate-army-card-once)
 [![License](https://img.shields.io/github/license/GooRoo/mkdocs-obsidian-bridge?style=flat-square)](LICENSE)
 ![REUSE Compliance](https://img.shields.io/reuse/compliance/github.com%2FGooRoo%2Fmkdocs-obsidian-bridge?style=flat-square)
+![GitHub branch check runs](https://img.shields.io/github/check-runs/GooRoo/mkdocs-obsidian-bridge/main?style=flat-square)
 
 An MkDocs plugin that helps exporting your [Obsidian](https://obsidian.md) vault as an MkDocs site.
 
@@ -156,6 +157,19 @@ This one looked like a perfect choice for my needs, however:
 ---
 
 ## Advanced topics
+
+### Warnings for invalid links
+
+Optionally, you can ask plugin to warn you when the resulting link still leads to an invalid target. This will prevent your site from building in “strict” mode.
+<details>
+  <summary>Enable it like this</summary>
+
+```yaml
+plugins:
+  - obsidian-bridge:
+      warn_on_invalid_links: true
+```
+</details>
 
 ### Styling of invalid links
 

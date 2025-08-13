@@ -43,7 +43,7 @@ dev-dependencies = [
 	"pylama[pylint,toml] >=8.4.1",
 	"ipykernel >=6.19.4",
 	"pytest >=7.0.0",
-	"mkdocs-test>=0.5.3",
+	"mkdocs-test>=0.5.6",
 	"super-collections>=0.5.3",
 	"rich>=14.1.0",
 ]
@@ -85,7 +85,7 @@ addopts = [
 	"--tb=short",
 	"--strict-markers",
 	"--strict-config",
-	"--disable-warnings"
+	"--disable-warnings",
 ]
 markers = [
 	"slow: marks tests as slow (deselect with '-m \"not slow\"')",
